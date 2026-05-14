@@ -2,43 +2,34 @@
 #include <iostream>
 #include <functional>
 
-/*
- * Constructor initializes table with given size.
- */
+
+// Constructor initializes table with given size.
 HashSet::HashSet(size_t size)
     : size_(size), used_(0), tombstones_(0) {
     table_.resize(size_);
 }
 
-/*
- * Computes 64-bit hash using std::hash.
- */
+// Computes 64-bit hash using std::hash.
 uint64_t HashSet::Hash(int key) const {
     return std::hash<int>{}(key);
 }
 
-/*
- * Extracts a 7-bit fingerprint from the hash.
- * 
- * Purpose:
- * - Fast pre-check before full key comparison
- * - Reduces expensive equality checks
- */
+
+// Extracts a 7-bit fingerprint from the hash  
+// Purpose: 
+// Fast pre-check before full key comparison
+// - Reduces expensive equality checks
 uint8_t HashSet::Fingerprint(uint64_t hash) const {
     return (hash >> 57) & 0x7F;
 }
 
-/*
- * Computes probing index using linear probing.
- */
+// Computes probing index using linear probing.
 size_t HashSet::ProbeIndex(size_t home, size_t i) const {
     return (home + i) % size_;
 }
 
-/*
- * Rehashes all elements into a new table.
- * Triggered when load factor exceeds threshold.
- */
+// Rehashes all elements into a new table.
+// Triggered when load factor exceeds threshold.
 void HashSet::Rehash(size_t new_size) {
     std::vector<Entry> old_table = table_;
 
@@ -57,9 +48,7 @@ void HashSet::Rehash(size_t new_size) {
     }
 }
 
-/*
- * Inserts a key using Robin Hood hashing.
- */
+// Inserts a key using Robin Hood hashing.
 bool HashSet::Add(int key) {
     // Resize if load factor too high
     if ((float)used_ / size_ > MAX_LOAD) {
@@ -107,9 +96,7 @@ bool HashSet::Add(int key) {
     return false;
 }
 
-/*
- * Checks if a key exists in the set.
- */
+// Checks if a key exists in the set.
 bool HashSet::Contains(int key) const {
     uint64_t hash = Hash(key);
     uint8_t fp = Fingerprint(hash);
@@ -130,9 +117,7 @@ bool HashSet::Contains(int key) const {
     return false;
 }
 
-/*
- * Removes a key by marking it as DELETED (tombstone).
- */
+// Removes a key by marking it as DELETED (tombstone).
 bool HashSet::Remove(int key) {
     uint64_t hash = Hash(key);
     uint8_t fp = Fingerprint(hash);
@@ -155,18 +140,14 @@ bool HashSet::Remove(int key) {
     return false;
 }
 
-/*
- * Clears the entire hash table.
- */
+// Clears the entire hash table.
 void HashSet::Clear() {
     table_.assign(size_, Entry{});
     used_ = 0;
     tombstones_ = 0;
 }
 
-/*
- * Displays table contents for debugging/visualization.
- */
+// Displays table contents for debugging/visualization.
 void HashSet::Display() const {
     std::cout << "Table: ";
     for (const auto& entry : table_) {

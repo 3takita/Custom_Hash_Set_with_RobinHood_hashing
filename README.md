@@ -11,13 +11,14 @@ A high-performance custom HashSet built from scratch using **Robin Hood hashing*
 - Dynamic resizing (rehashing)
 - Tombstone-based deletion
 - Clean separation (header / implementation)
+- Demonstrates Add, Remove, Contains, Clear, Display
 
 ---
 
 ## Performance Insights
 - **Fingerprinting**
   - Reduces expensive key comparisons
-  - Inspired by modern hash tables (e.g., SwissTable)
+  - Inspired by modern hash tables like SwissTable
 
 - **Cache-friendly**
   - Contiguous memory (`std::vector`)

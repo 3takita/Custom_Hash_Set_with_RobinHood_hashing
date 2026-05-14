@@ -16,7 +16,7 @@ void Menu() {
         std::cin >> option;
 
         switch (option) {
-            case 1:
+            case 1: // Add a key to the HashSet
                 std::cout << "Enter key: ";
                 std::cin >> key;
                 if (hs.Add(key))
@@ -25,7 +25,7 @@ void Menu() {
                     std::cout << "Already exists.\n";
                 break;
 
-            case 2:
+            case 2: // Remove a key from the HashSet
                 std::cout << "Enter key: ";
                 std::cin >> key;
                 if (hs.Remove(key))
@@ -34,18 +34,18 @@ void Menu() {
                     std::cout << "Not found.\n";
                 break;
 
-            case 3:
+            case 3: // Contains
                 std::cout << "Enter key: ";
                 std::cin >> key;
                 std::cout << (hs.Contains(key) ? "True\n" : "False\n");
                 break;
 
-            case 4:
+            case 4: // Clear
                 hs.Clear();
                 std::cout << "Cleared.\n";
                 break;
 
-            case 5:
+            case 5: // Display
                 hs.Display();
                 break;
 
